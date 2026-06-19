@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+client/node_modules/
+
+# Production builds
+client/dist/
+client/dist-ssr/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+server/.env
+
+# Python Caches & build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+.tox/
+.coverage
+.cache
+.pytest_cache/
+
+# Databases
+server/chroma_db/
+
+# Editor directories and files
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
