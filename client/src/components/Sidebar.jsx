@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { UploadCloud, FileText, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
-import { uploadPdfs } from '../utils/api';
+import { UploadCloud, FileText, Loader2, CheckCircle2, AlertCircle, Trash2 } from 'lucide-react';
+import { uploadPdfs, clearSessionDocuments, resetSession } from '../utils/api';
 
 const Sidebar = () => {
     const [files, setFiles] = useState([]);
@@ -37,6 +37,23 @@ const Sidebar = () => {
         } catch (error) {
             setStatus({ type: 'error', msg: error.message });
         } finally {
+            setIsUploading(false);
+        }
+    };
+
+    const handleClear = async () => {
+        setIsUploading(true);
+        setStatus({ type: 'info', msg: 'Clearing session documents...' });
+        
+        try {
+            await clearSessionDocuments();
+            resetSession();
+            setStatus({ type: 'success', msg: 'Session cleared. Reloading...' });
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            setStatus({ type: 'error', msg: error.message });
             setIsUploading(false);
         }
     };
@@ -86,6 +103,14 @@ const Sidebar = () => {
                     disabled={files.length === 0 || isUploading}
                 >
                     {isUploading ? <Loader2 size={18} className="spin" /> : 'Process Documents'}
+                </button>
+
+                <button 
+                    className="clear-btn" 
+                    onClick={handleClear}
+                    disabled={isUploading}
+                >
+                    <Trash2 size={18} /> Clear Session
                 </button>
 
                 {status && (

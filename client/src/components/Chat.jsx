@@ -76,7 +76,7 @@ const Chat = () => {
 
             <div className="chat-input-container">
                 <div className="chat-input-box">
-                    <textarea 
+                    <textarea
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -84,8 +84,8 @@ const Chat = () => {
                         rows={1}
                         disabled={isStreaming}
                     />
-                    <button 
-                        className="send-btn" 
+                    <button
+                        className="send-btn"
                         onClick={handleSend}
                         disabled={!input.trim() || isStreaming}
                     >

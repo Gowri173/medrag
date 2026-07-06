@@ -8,9 +8,9 @@ from modules.vector_store import get_vector_store
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
-def get_rag_chain():
+def get_rag_chain(session_id: str = "default_collection"):
     llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0)
-    vector_store = get_vector_store()
+    vector_store = get_vector_store(session_id)
     retriever = vector_store.as_retriever(search_kwargs={"k": 5})
     
     template = """You are MedRAGnosis, a helpful and highly accurate medical knowledge assistant.
@@ -36,8 +36,8 @@ Answer:"""
     
     return rag_chain
 
-async def stream_rag_response(query: str):
-    chain = get_rag_chain()
+async def stream_rag_response(query: str, session_id: str = "default_collection"):
+    chain = get_rag_chain(session_id)
     # astream yields chunks of string
     async for chunk in chain.astream(query):
         yield chunk
